@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "whoismyfriendswimf",
+	"version": "${version}",
+	"name": "WhoIsMyFriends(WIMF)",
+	"description": "Client-side friend management tool designed to help you remember everyone you meet on your Minecraft adventures. YOPTA!",
+	"authors": [
+		"ITExpy"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/whoismyfriendswimf/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.wimf.WhoIsMyFriendsWIMF"
+		],
+		"client": [
+			"com.wimf.WhoIsMyFriendsWIMFClient"
+		]
+	},
+	"mixins": [
+		"whoismyfriendswimf.mixins.json",
+		{
+			"config": "whoismyfriendswimf.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.17.2",
+		"minecraft": "~1.21.7",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
