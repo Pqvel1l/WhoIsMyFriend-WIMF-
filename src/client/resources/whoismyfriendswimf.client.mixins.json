@@ -3,7 +3,7 @@
 	"package": "com.wimf.mixin.client",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
-		"ExampleClientMixin"
+		"PlayerListHudMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

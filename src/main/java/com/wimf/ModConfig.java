@@ -35,4 +35,11 @@ public class ModConfig {
     public void setFriends(List<FriendProfile> friends) {
         this.friends = friends;
     }
+    private String friendIcon = "👤";
+    private String friendIconColor = "#ffdc00"; // Используем названия или HEX
+
+    public String getFriendIcon() { return friendIcon; }
+    public void setFriendIcon(String icon) { this.friendIcon = icon; }
+    public String getFriendIconColor() { return friendIconColor; }
+    public void setFriendIconColor(String color) { this.friendIconColor = color; }
 }

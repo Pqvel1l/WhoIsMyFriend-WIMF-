@@ -16,6 +16,6 @@ public class WhoIsMyFriendsWIMF implements ModInitializer {
 	@Override
 	public void onInitialize() {
 
-		ModCommands.register();
+
 	}
 }

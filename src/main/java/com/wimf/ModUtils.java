@@ -1,31 +1,70 @@
 package com.wimf;
 
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TextColor;
 import net.minecraft.util.Formatting;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+/**
+ * Утилитный класс для общих вспомогательных методов мода.
+ */
 public class ModUtils {
 
-    // Наш префикс. Мы можем легко поменять его здесь в любой момент.
-    private static final Text PREFIX = Text.literal("[WIMF] ").formatted(Formatting.GOLD); // GOLD = золотой цвет (§6)
+    // --- Логика для сообщений ---
+    private static final Text PREFIX = Text.translatable("wimf.prefix");
 
     /**
-     * Создает сообщение для чата с префиксом мода.
-     * @param message Текст сообщения.
+     * Создает переводимое сообщение для чата с префиксом мода.
+     * @param key Ключ перевода из lang-файла.
+     * @param args Аргументы для подстановки (например, никнеймы).
      * @return Готовое к отправке Text-сообщение.
      */
-    public static Text translatable(String message) {
-        // .copy() создает копию, чтобы не изменять оригинальный PREFIX
-        // .append() добавляет наш текст к префиксу
-        return PREFIX.copy().append(Text.literal(message).formatted(Formatting.GRAY)); // GRAY = серый цвет (§7)
+    public static Text translatable(String key, Object... args) {
+        return PREFIX.copy().append(Text.translatable(key, args));
     }
 
+
+    // --- Логика для парсинга цветов ---
+
+    // Статическая карта для мгновенного преобразования кодов '&' в объекты Formatting
+    private static final Map<Character, Formatting> LEGACY_COLOR_MAP = Stream.of(Formatting.values())
+            .filter(Formatting::isColor)
+            .collect(Collectors.toMap(Formatting::getCode, formatting -> formatting));
+
     /**
-     * Перегруженная версия для сообщений с форматированием (цветами).
-     * @param message Текст сообщения, уже содержащий цветовые коды.
-     * @return Готовое к отправке Text-сообщение.
+     * "Умный" парсер цвета. Принимает строку и пытается преобразовать ее в TextColor.
+     * Поддерживает:
+     * - HEX формат: "#RRGGBB"
+     * - Имена цветов: "red", "gold", "light_purple"
+     * - Устаревшие коды: "&c", "&6", "&d"
+     *
+     * @param colorInput Строка с цветом.
+     * @return Объект TextColor если парсинг успешен, иначе null.
      */
-    public static Text translatableWithCodes(String message) {
-        return PREFIX.copy().append(Text.literal(message));
+    public static TextColor parseColor(String colorInput) {
+        if (colorInput == null || colorInput.isEmpty()) {
+            return null;
+        }
+
+        // 1. Пробуем обработать устаревший формат (& + код)
+        if (colorInput.startsWith("&") && colorInput.length() == 2) {
+            Formatting formatting = LEGACY_COLOR_MAP.get(colorInput.charAt(1));
+            if (formatting != null) {
+                // Преобразуем enum Formatting в TextColor
+                return TextColor.fromFormatting(formatting);
+            }
+        }
+
+        // 2. Если не получилось, доверяем ванильному парсеру (он умеет в HEX и имена)
+        try {
+            // TextColor.parse вернет Optional, .getOrThrow() выбросит исключение если цвет невалидный
+            return TextColor.parse(colorInput).getOrThrow();
+        } catch (Exception ignored) {
+            // Если и ванильный парсер не справился, значит формат неверный
+            return null;
+        }
     }
 }
