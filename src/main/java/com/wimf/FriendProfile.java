@@ -11,6 +11,7 @@ public class FriendProfile {
     private List<String> notes = new ArrayList<>();
     private String onlineColor;  // Цвет, когда друг в сети
     private String offlineColor; // Цвет, когда друг не в сети
+    private long lastSeenTimestamp = 0;
 
     // 2. КОНСТРУКТОР
     public FriendProfile(String nickname) { // Теперь принимаем только ник
@@ -29,6 +30,13 @@ public class FriendProfile {
     public String getOnlineColor() { return onlineColor; }
     public String getOfflineColor() { return offlineColor; }
 
+    public long getLastSeenTimestamp() {
+        return lastSeenTimestamp;
+    }
+
+    public void setLastSeenTimestamp(long lastSeenTimestamp) {
+        this.lastSeenTimestamp = lastSeenTimestamp;
+    }
     // --- Сеттеры ---
     public List<String> getNotes() { return this.notes; }
     public void setNotes(List<String> notes) { this.notes = notes; }
@@ -48,6 +56,7 @@ public class FriendProfile {
         }
         return false;
     }
+
     public void setOnlineColor(String onlineColor) { this.onlineColor = onlineColor; }
     public void setOfflineColor(String offlineColor) { this.offlineColor = offlineColor; }
 

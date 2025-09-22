@@ -17,5 +17,6 @@ public class WhoIsMyFriendsWIMFClient implements ClientModInitializer {
 			// Как только мы зашли в мир, инициализируем нашу команду
 			FriendTeam.initialize();
 		});
+		FriendStatusObserver.initialize();
 	}
 }

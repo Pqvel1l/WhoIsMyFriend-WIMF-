@@ -23,6 +23,10 @@
   "wimf.profile.button.friend_delete": "  §c[Удалить друга]",
   "wimf.profile.nav.back_to_list": "§e[<< К списку]",
   "wimf.profile.button.friend_msg": "  §b[Написать в ЛС]",
+  "wimf.profile.status_header": "  §7Статус: %s",
+  "wimf.profile.status.online": "§aВ сети",
+  "wimf.profile.status.never": "§7Не замечен в сети",
+  "wimf.profile.status.last_seen_format": "§eбыл в сети %s §eв %s",
 
   "wimf.settings.header": "§6-----------§e[ Настройки WIMF ]§6-----------",
   "wimf.settings.online_color": "  §7Цвет статуса 'Онлайн': ",

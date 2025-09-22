@@ -10,6 +10,8 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -211,12 +213,16 @@ public class ModCommands {
         Optional<FriendProfile> friendOpt = FriendManager.getInstance().getFriend(nickname);
         if (friendOpt.isPresent()) {
             FriendProfile profile = friendOpt.get();
-            sendBlankLine(source);
+
+
             source.sendFeedback(Text.translatable("wimf.profile.header", profile.getNickname()));
             sendBlankLine(source);
-
+            source.sendFeedback(Text.translatable("wimf.profile.status_header", formatLastSeen(profile.getLastSeenTimestamp())));
+            sendBlankLine(source);
+            // --- КОНЕЦ НОВОГО БЛОКА ---
             source.sendFeedback(Text.translatable("wimf.profile.notes_header"));
             List<String> notes = profile.getNotes();
+
             if (notes.isEmpty()) {
                 source.sendFeedback(Text.translatable("wimf.profile.notes_empty"));
             } else {
@@ -401,4 +407,25 @@ public class ModCommands {
                 .withClickEvent(new ClickEvent.RunCommand(command))
                 .withHoverEvent(new HoverEvent.ShowText(Text.literal(hoverText))));
     }
+
+    private static Text formatLastSeen(long timestamp) {
+        if (timestamp == 1) {
+            return Text.translatable("wimf.profile.status.online");
+        }
+        if (timestamp == 0) {
+            return Text.translatable("wimf.profile.status.never");
+        }
+
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+
+        Date resultDate = new Date(timestamp);
+
+        String dateString = dateFormat.format(resultDate);
+        String timeString = timeFormat.format(resultDate);
+        return Text.translatable("wimf.profile.status.last_seen_format", dateString, timeString);
+    }
+
 }

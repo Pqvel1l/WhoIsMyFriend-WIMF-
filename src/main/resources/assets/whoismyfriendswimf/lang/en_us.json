@@ -23,6 +23,10 @@
   "wimf.profile.button.friend_delete": "  §c[Delete Friend]",
   "wimf.profile.nav.back_to_list": "§e[<< To List]",
   "wimf.profile.button.friend_msg": "  §b[Send DM]",
+  "wimf.profile.status_header": "  §7Status: %s",
+  "wimf.profile.status.online": "§aOnline",
+  "wimf.profile.status.never": "§7Never seen",
+  "wimf.profile.status.last_seen_format": "§elast seen%s at %s",
 
   "wimf.settings.header": "§6-----------§e[ WIMF Settings ]§6-----------",
   "wimf.settings.online_color": "  §7'Online' status color: ",
