@@ -12,19 +12,14 @@ public class FriendTeam {
 
     public static void initialize() {
         MinecraftClient client = MinecraftClient.getInstance();
-        // Мы должны дождаться, пока мир загрузится, чтобы получить доступ к Scoreboard
-        // Этот код будет вызван позже
         if (client.world == null) return;
 
         Scoreboard scoreboard = client.world.getScoreboard();
         Team existingTeam = scoreboard.getTeam(TEAM_NAME);
 
         if (existingTeam == null) {
-            // Команды не существует, создаем ее
             teamInstance = scoreboard.addTeam(TEAM_NAME);
-            // Это название, которое будет использоваться для сортировки. Пробел в начале ставит его наверх.
             teamInstance.setDisplayName(Text.literal(" WIMF Friends"));
-            // Сделаем так, чтобы у команды не было никаких видимых префиксов или цветов
             teamInstance.setColor(Formatting.RESET);
         } else {
             teamInstance = existingTeam;
@@ -32,7 +27,6 @@ public class FriendTeam {
     }
 
     public static Team getTeam() {
-        // Если команда по какой-то причине не создалась, вызываем initialize() еще раз.
         if (teamInstance == null) {
             initialize();
         }
