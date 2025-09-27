@@ -8,20 +8,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/**
- * Утилитный класс для общих вспомогательных методов мода.
- */
 public class ModUtils {
 
     // --- Логика для сообщений ---
     private static final Text PREFIX = Text.translatable("wimf.prefix");
 
-    /**
-     * Создает переводимое сообщение для чата с префиксом мода.
-     * @param key Ключ перевода из lang-файла.
-     * @param args Аргументы для подстановки (например, никнеймы).
-     * @return Готовое к отправке Text-сообщение.
-     */
     public static Text translatable(String key, Object... args) {
         return PREFIX.copy().append(Text.translatable(key, args));
     }
@@ -38,11 +29,7 @@ public class ModUtils {
      * "Умный" парсер цвета. Принимает строку и пытается преобразовать ее в TextColor.
      * Поддерживает:
      * - HEX формат: "#RRGGBB"
-     * - Имена цветов: "red", "gold", "light_purple"
      * - Устаревшие коды: "&c", "&6", "&d"
-     *
-     * @param colorInput Строка с цветом.
-     * @return Объект TextColor если парсинг успешен, иначе null.
      */
     public static TextColor parseColor(String colorInput) {
         if (colorInput == null || colorInput.isEmpty()) {
@@ -60,10 +47,10 @@ public class ModUtils {
 
         // 2. Если не получилось, доверяем ванильному парсеру (он умеет в HEX и имена)
         try {
-            // TextColor.parse вернет Optional, .getOrThrow() выбросит исключение если цвет невалидный
+
             return TextColor.parse(colorInput).getOrThrow();
         } catch (Exception ignored) {
-            // Если и ванильный парсер не справился, значит формат неверный
+
             return null;
         }
     }
