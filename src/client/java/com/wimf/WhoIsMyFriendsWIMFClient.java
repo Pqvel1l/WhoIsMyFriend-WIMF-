@@ -11,10 +11,7 @@ public class WhoIsMyFriendsWIMFClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		ConfigManager.getInstance().load();
 		ModCommands.register();
-
-		// Регистрируем "слушателя" события входа на сервер/в мир
 		ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
-			// Как только мы зашли в мир, инициализируем нашу команду
 			FriendTeam.initialize();
 		});
 		FriendStatusObserver.initialize();
