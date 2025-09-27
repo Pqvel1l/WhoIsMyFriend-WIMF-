@@ -15,14 +15,13 @@ public class FriendStatusObserver {
     }
 
     private static void onClientTick(MinecraftClient client) {
-        // Увеличиваем счетчик тиков
         tickCounter++;
         if (tickCounter < CHECK_INTERVAL) {
-            return; // Если время проверки еще не пришло, выходим
+            return; 
         }
-        tickCounter = 0; // Сбрасываем счетчик
+        tickCounter = 0;
 
-        // Проверяем, зашли ли мы в мир
+
         if (client.player == null || client.getNetworkHandler() == null) {
             return;
         }
