@@ -15,6 +15,7 @@ WIMF is a 100% client-side mod that gives you a comprehensive, in-game notebook 
 *   **Detailed Player Profiles:** The core of WIMF! Each friend has a profile where you can:
     *   Add **multiple, separate notes**. Keep track of trades, shared bases, funny moments, or role-playing history.
     *   Easily add, edit, or remove notes by their ID.
+    *   See last online of your friend!
 *   **Deep Customization:** Take control of how your friends appear! Use the `/friend setting` command to change the display colors for "Online" and "Offline" statuses using standard color names or HEX codes.
 *   **Smart Autocomplete:** Commands are easy to use thanks to built-in suggestions. The mod will suggest online players when adding a new friend, and suggest from your existing friend list when managing a profile.
 *   **100% Client-Side:** No server installation required! You can use WIMF on any of your favorite multiplayer servers.
