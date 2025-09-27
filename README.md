@@ -24,7 +24,7 @@ WIMF is a 100% client-side mod that gives you a comprehensive, in-game notebook 
 *   Type `/friend` to see the main interactive menu.
 *   `/friend add <nickname>` - Add a player to your list.
 *   `/friend list` - View your list of friends.
-*   `/friend profile <nickname>` - Click the "[Профиль]" button in the list or use this command to view a friend's details.
+*   `/friend profile <nickname>` - Click the "[Profile]" button in the list or use this command to view a friend's details.
 *   `/friend note <nickname> add <text>` - Add a new note to a friend.
 *   `/friend setting` - Open the settings menu to customize colors.
 
