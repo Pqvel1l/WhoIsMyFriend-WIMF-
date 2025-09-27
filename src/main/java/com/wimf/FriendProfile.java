@@ -6,7 +6,7 @@ import java.util.List;
 
 public class FriendProfile {
 
-    // 1. ПОЛЯ КЛАССА (версия 2.0)
+    // 1. ПОЛЯ КЛАССА 
     private String nickname;
     private List<String> notes = new ArrayList<>();
     private String onlineColor;  // Цвет, когда друг в сети
