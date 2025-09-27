@@ -60,9 +60,7 @@ public class ModCommands {
                                     })
                             )
                     )
-// Файл: com/wimf/ModCommands.java
 
-// --- REMOVE ---
                             .then(ClientCommandManager.literal("remove")
                                     .then(ClientCommandManager.argument("nickname", StringArgumentType.word()).suggests(FRIEND_SUGGESTIONS)
                                             // Этот блок выполняется после нажатия кнопки [Да]
@@ -79,14 +77,14 @@ public class ModCommands {
                                                         return 1;
                                                     })
                                             )
-                                            // Этот блок выполняется при вводе /friend remove <ник>
+                                            //  /friend remove <ник>
                                             .executes(context -> {
                                                 String nickname = StringArgumentType.getString(context, "nickname");
                                                 FabricClientCommandSource source = context.getSource();
 
-                                                // <--- ВОТ ИСПРАВЛЕНИЕ: ПРОВЕРЯЕМ, ЯВЛЯЕТСЯ ЛИ ИГРОК ДРУГОМ ---
+                                               
                                                 if (FriendManager.getInstance().isFriend(nickname)) {
-                                                    // Если да, то показываем диалог подтверждения
+                                                    
                                                     sendBlankLine(source);
                                                     source.sendFeedback(ModUtils.translatable("wimf.message.remove_confirm", nickname));
                                                     MutableText confirmation = Text.literal("  ")
@@ -96,10 +94,10 @@ public class ModCommands {
                                                     source.sendFeedback(confirmation);
                                                     sendBlankLine(source);
                                                 } else {
-                                                    // Если нет, то сразу выводим ошибку
+                                                    
                                                     source.sendFeedback(ModUtils.translatable("wimf.message.friend_not_found", nickname));
                                                 }
-                                                // <--- КОНЕЦ ИСПРАВЛЕНИЯ ---
+                                               
 
                                                 return 1;
                                             })
@@ -181,16 +179,14 @@ public class ModCommands {
 
                 MutableText nicknameText = Text.literal(profile.getNickname());
 
-                // --- ИЗМЕНЕНИЕ ЗДЕСЬ ---
-                // БЫЛО: try-catch с TextColor.parse(colorCode)
-                // СТАЛО: Используем ModUtils.parseColor
+
                 TextColor color = ModUtils.parseColor(colorCode);
                 if (color != null) {
                     nicknameText.setStyle(Style.EMPTY.withColor(color));
                 } else {
-                    nicknameText.formatted(Formatting.WHITE); // Цвет по умолчанию, если в конфиге ошибка
+                    nicknameText.formatted(Formatting.WHITE);
                 }
-                // --- КОНЕЦ ИЗМЕНЕНИЯ ---
+
 
                 MutableText message = Text.literal("  §7- ").append(nicknameText).append(" ");
                 message.append(createRunButton(Text.translatable("wimf.list.button.profile").getString(), "/friend profile " + profile.getNickname(), ""));
@@ -199,7 +195,6 @@ public class ModCommands {
         }
         sendBlankLine(source);
 
-        // ... (остальная часть метода без изменений)
         MutableText navLine = Text.literal("  ");
         if (page > 1) navLine.append(createRunButton(Text.translatable("wimf.list.nav.back").getString(), "/friend list " + (page - 1), ""));
         if (page > 1 && page < totalPages) navLine.append(Text.literal("   "));
@@ -213,13 +208,11 @@ public class ModCommands {
         Optional<FriendProfile> friendOpt = FriendManager.getInstance().getFriend(nickname);
         if (friendOpt.isPresent()) {
             FriendProfile profile = friendOpt.get();
-
-
             source.sendFeedback(Text.translatable("wimf.profile.header", profile.getNickname()));
             sendBlankLine(source);
             source.sendFeedback(Text.translatable("wimf.profile.status_header", formatLastSeen(profile.getLastSeenTimestamp())));
             sendBlankLine(source);
-            // --- КОНЕЦ НОВОГО БЛОКА ---
+
             source.sendFeedback(Text.translatable("wimf.profile.notes_header"));
             List<String> notes = profile.getNotes();
 
@@ -237,7 +230,7 @@ public class ModCommands {
             sendBlankLine(source);
             source.sendFeedback(createSuggestButton(Text.translatable("wimf.profile.button.note_add").getString(), "/friend note " + nickname + " add ", ""));
 
-            // --- НОВАЯ КНОПКА "НАПИСАТЬ В ЛС" ---
+
             source.sendFeedback(createSuggestButton(Text.translatable("wimf.profile.button.friend_msg").getString(), "/msg " + nickname + " ", ""));
             source.sendFeedback(createRunButton(Text.translatable("wimf.profile.button.friend_delete").getString(), "/friend remove " + nickname, ""));
             sendBlankLine(source);
@@ -254,7 +247,6 @@ public class ModCommands {
         source.sendFeedback(Text.translatable("wimf.settings.header"));
         sendBlankLine(source);
 
-        // --- ИЗМЕНЕНИЕ ДЛЯ ONLINE ЦВЕТА ---
         MutableText onlineLine = Text.literal(Text.translatable("wimf.settings.online_color").getString());
         TextColor onlineColor = ModUtils.parseColor(config.getOnlineColor());
         if (onlineColor != null) {
@@ -265,8 +257,7 @@ public class ModCommands {
         onlineLine.append(" ").append(createSuggestButton(Text.translatable("wimf.settings.button.edit").getString(), "/friend setting color online " + config.getOnlineColor(), ""));
         source.sendFeedback(onlineLine);
         sendBlankLine(source);
-
-        // --- ИЗМЕНЕНИЕ ДЛЯ OFFLINE ЦВЕТА ---
+        
         MutableText offlineLine = Text.literal(Text.translatable("wimf.settings.offline_color").getString());
         TextColor offlineColor = ModUtils.parseColor(config.getOfflineColor());
         if (offlineColor != null) {
@@ -278,7 +269,7 @@ public class ModCommands {
         source.sendFeedback(offlineLine);
         sendBlankLine(source);
 
-        // --- ИЗМЕНЕНИЕ ДЛЯ ЦВЕТА ИКОНКИ ---
+
         MutableText iconLine = Text.literal(Text.translatable("wimf.settings.icon").getString());
         MutableText iconPreview = Text.literal(config.getFriendIcon());
         TextColor iconColor = ModUtils.parseColor(config.getFriendIconColor());
@@ -295,20 +286,19 @@ public class ModCommands {
         source.sendFeedback(Text.translatable("wimf.menu.footer"));
         return 1;
     }
-// Файл: com/wimf/client/ModCommands.java
+
 
     private static int executeColorSetting(FabricClientCommandSource source, String type, String colorInput) {
-        // 1. Вызываем наш новый "умный" парсер
+
         TextColor parsedColor = ModUtils.parseColor(colorInput);
 
-        // 2. Проверяем результат. Если null - цвет невалидный.
+
         if (parsedColor == null) {
             source.sendFeedback(ModUtils.translatable("wimf.message.color_error"));
-            return 0; // Возвращаем 0 или -1 для обозначения неудачи
+            return 0; 
         }
 
-        // 3. Если цвет валидный, сохраняем ИСХОДНУЮ строку в конфиг
-        // Это позволит пользователю видеть в конфиге именно то, что он ввел (&6, а не "gold")
+
         switch (type) {
             case "online" -> ConfigManager.getInstance().getConfig().setOnlineColor(colorInput);
             case "offline" -> ConfigManager.getInstance().getConfig().setOfflineColor(colorInput);
@@ -318,16 +308,13 @@ public class ModCommands {
         ConfigManager.getInstance().save();
         source.sendFeedback(ModUtils.translatable("wimf.message.color_set", type, colorInput));
 
-        // Перезапускаем команду, чтобы пользователь сразу увидел примененные изменения
-        // Это хорошая практика для UI
         if (source.getClient().player != null) {
             source.getClient().player.networkHandler.sendChatCommand("friend setting");
         }
 
-        return 1; // Успех
+        return 1;
     }
 
-    // --- МЕТОДЫ ДЛЯ ЗАМЕТОК ---
     private static int executeNoteAdd(FabricClientCommandSource source, String nickname, String text) {
         return FriendManager.getInstance().getFriend(nickname).map(profile -> {
             profile.addNote(text);
@@ -391,7 +378,6 @@ public class ModCommands {
         });
     }
 
-    // --- ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ ДЛЯ UI ---
     private static void sendBlankLine(FabricClientCommandSource source) {
         source.sendFeedback(Text.literal(" "));
     }
@@ -415,10 +401,7 @@ public class ModCommands {
         if (timestamp == 0) {
             return Text.translatable("wimf.profile.status.never");
         }
-
-
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
         Date resultDate = new Date(timestamp);
