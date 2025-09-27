@@ -8,7 +8,6 @@ public class FriendManager {
     public static FriendManager getInstance() { return INSTANCE; }
     private FriendManager() {}
 
-    // Мы больше не храним список здесь. Мы просто проксируем вызовы к конфигу.
     private List<FriendProfile> getFriendsList() {
         return ConfigManager.getInstance().getConfig().getFriends();
     }
@@ -18,14 +17,14 @@ public class FriendManager {
             return false;
         }
         getFriendsList().add(new FriendProfile(nickname));
-        ConfigManager.getInstance().save(); // Сохраняем весь конфиг
+        ConfigManager.getInstance().save(); 
         return true;
     }
 
     public boolean removeFriend(String nickname) {
         boolean removed = getFriendsList().removeIf(profile -> profile.getNickname().equalsIgnoreCase(nickname));
         if (removed) {
-            ConfigManager.getInstance().save(); // Сохраняем, только если что-то изменилось
+            ConfigManager.getInstance().save(); 
         }
         return removed;
     }
@@ -41,6 +40,6 @@ public class FriendManager {
     }
 
     public List<FriendProfile> getAllFriends() {
-        return getFriendsList(); // Теперь можно возвращать напрямую
+        return getFriendsList(); 
     }
 }
