@@ -23,7 +23,7 @@ public class PlayerListHudMixin {
 		if (FriendManager.getInstance().isFriend(entry.getProfile().getName())) {
 			ModConfig config = ConfigManager.getInstance().getConfig();
 
-			// 1. Получаем оригинальное имя, которое вернул сервер (с рангами и т.д.)
+			// 1. Получаем оригинальное имя, которое вернул сервер
 			Text originalName = cir.getReturnValue();
 
 			// 2. Создаем иконку
@@ -36,7 +36,7 @@ public class PlayerListHudMixin {
 			// 3. Получаем строку с цветом из конфига
 			String iconColorString = config.getFriendIconColor();
 
-			// 4. Используем НАШ "умный" парсер для получения цвета
+			// 4. Используем "умный" парсер для получения цвета
 			TextColor color = ModUtils.parseColor(iconColorString);
 
 			// 5. Применяем цвет, если он валидный
